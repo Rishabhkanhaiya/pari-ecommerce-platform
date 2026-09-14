@@ -276,35 +276,36 @@ export default function HomePage() {
               </AnimatePresence>
             </div>
 
-            {/* ── RIGHT COLUMN: REFINED SPOTLIGHT SHOWCASE CARD ── */}
+            {/* ── RIGHT COLUMN: BALANCED SPOTLIGHT SHOWCASE CARD ── */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div className="w-full max-w-sm lg:max-w-md bg-white rounded-none p-4 sm:p-5 shadow-xl shadow-amber-950/5 border border-amber-200/80 relative">
                 {/* Spotlight Header */}
-                <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-amber-200/60">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#E8272A] bg-rose-50 border border-rose-200/80 px-2 py-0.5 whitespace-nowrap">
-                      Spotlight
+                <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-amber-100">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#E8272A] bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-none">
+                      Featured Spotlight
                     </span>
-                    <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base truncate">
+                    <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base">
                       {slide.spotlightTitle}
                     </h3>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded-none border border-emerald-200/80 flex-shrink-0 whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded-none border border-emerald-200 flex-shrink-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span>In Stock</span>
                   </span>
                 </div>
 
-                {/* Refined Showcase Frame (Square Proportioned to Show Full Product Without Cropping) */}
+                {/* Streamlined Showcase Frame (Proportioned to avoid viewport overflow) */}
                 <Link
                   href={`/product/${slide.slug}`}
-                  className="block relative aspect-square max-h-[260px] sm:max-h-[280px] w-full overflow-hidden bg-[#FAF9F6] border border-amber-200/70 rounded-none group cursor-pointer flex items-center justify-center p-2.5"
+                  className="block relative aspect-[16/10] w-full overflow-hidden bg-stone-100 border border-stone-200 rounded-none group cursor-pointer"
                 >
                   <img
                     src={slide.image}
                     alt={slide.productName}
-                    className="max-w-full max-h-full w-auto h-auto object-contain rounded-none select-none"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-60 group-hover:opacity-30 transition-opacity" />
 
                   {/* Badges on top of card */}
                   <div className="absolute top-2.5 left-2.5">
@@ -314,7 +315,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="absolute top-2.5 right-2.5">
-                    <span className="inline-flex items-center gap-1 bg-black/85 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-none shadow-2xs border border-white/20">
+                    <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-none shadow-2xs border border-white/20">
                       <Clock size={10} className="text-amber-400" />
                       <span>30–45m Kinwat</span>
                     </span>
@@ -335,16 +336,16 @@ export default function HomePage() {
                   </p>
 
                   {/* Pricing Bar */}
-                  <div className="flex items-center justify-between gap-2 px-3 py-2 bg-gradient-to-r from-amber-50/70 via-[#FFFDF8] to-stone-50 border border-amber-200/70 rounded-none mb-3">
+                  <div className="flex items-center justify-between gap-2 p-2.5 bg-[#FFFDF8] border border-amber-200/70 rounded-none mb-3">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-xl font-black text-[#E8272A] tracking-tight">
+                      <span className="text-xl font-black text-[#E8272A]">
                         ₹{slide.price.toLocaleString('en-IN')}
                       </span>
-                      <span className="text-xs text-stone-400 line-through font-medium">
+                      <span className="text-xs text-stone-400 line-through">
                         ₹{slide.mrp.toLocaleString('en-IN')}
                       </span>
                     </div>
-                    <span className="bg-[#E8272A]/10 text-[#E8272A] text-[10px] font-black uppercase px-2 py-0.5 border border-[#E8272A]/20">
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5 rounded-none">
                       {slide.saveText}
                     </span>
                   </div>
@@ -362,7 +363,7 @@ export default function HomePage() {
                     </button>
                     <Link
                       href={`/product/${slide.slug}`}
-                      className="inline-flex items-center justify-center gap-1.5 border border-stone-900 bg-stone-900 hover:bg-stone-800 text-white font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-none transition-colors text-center"
+                      className="inline-flex items-center justify-center gap-1.5 border border-stone-300 hover:border-stone-900 bg-white hover:bg-stone-50 text-stone-900 font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-none transition-colors text-center"
                     >
                       <span>Order Now</span>
                       <ArrowRight size={13} />
@@ -430,7 +431,7 @@ export default function HomePage() {
                         <img
                           src={catImg}
                           alt={cat.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
 
@@ -568,7 +569,7 @@ export default function HomePage() {
                     <img
                       src="/images/products/kundan-necklace.jpg"
                       alt="Kinwat Express Delivery"
-                      className="w-full h-full object-cover filter brightness-95"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
 
