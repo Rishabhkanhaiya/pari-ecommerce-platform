@@ -114,7 +114,7 @@ export default function CartPage() {
                     <img
                       src={item.image || '/images/placeholder-product.jpg'}
                       alt={item.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 rounded-none"
+                      className="w-full h-full object-cover rounded-none"
                       onError={(e) => (e.currentTarget.src = '/images/placeholder-product.jpg')}
                     />
                   </div>

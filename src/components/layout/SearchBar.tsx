@@ -223,7 +223,7 @@ export default function SearchBar({
                             <img
                               src={img}
                               alt={prod.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform rounded-none"
+                              className="w-full h-full object-cover rounded-none"
                             />
                           </div>
                           <div className="min-w-0">

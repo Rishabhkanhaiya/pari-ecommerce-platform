@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect } from 'react'
 import Link from 'next/link'
@@ -151,7 +151,7 @@ export default function CartDrawer() {
                         <img
                           src={item.image || '/images/placeholder-product.jpg'}
                           alt={item.name}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
+                          className="w-full h-full object-cover"
                           onError={(e) => {
                             ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
                           }}

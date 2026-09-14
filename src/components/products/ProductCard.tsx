@@ -76,7 +76,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <img
           src={primaryImage}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-none"
+          className="w-full h-full object-cover rounded-none"
           onError={(e) => {
             ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
           }}

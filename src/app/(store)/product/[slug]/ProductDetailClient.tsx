@@ -19,6 +19,7 @@ import {
   X,
   Clock,
   Award,
+  Maximize2,
 } from 'lucide-react'
 import { useCart } from '@/store/cart'
 import { useWishlist } from '@/store/wishlist'
@@ -193,7 +194,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   }
 
   return (
-    <div className="container-custom py-8">
+    <div className="container-custom max-w-6xl py-6 lg:py-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
         <Link href="/" className="hover:text-primary-500">Home</Link>
@@ -204,23 +205,29 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <span className="text-gray-900 font-medium truncate max-w-xs">{product.name}</span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-        {/* Left Column: Images (7 cols) */}
-        <div className="lg:col-span-7">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 mb-12 items-start">
+        {/* Left Column: Images (6 cols) */}
+        <div className="lg:col-span-6">
           {/* Main Image Container */}
           <div
             onClick={() => setLightboxOpen(true)}
-            className="aspect-square bg-stone-50 rounded-none border border-stone-200 overflow-hidden mb-3 relative group cursor-pointer select-none"
-            title="Click to view full image"
+            className="aspect-square max-h-[480px] sm:max-h-[520px] w-full bg-[#FAF9F6] rounded-none border border-stone-200 overflow-hidden mb-3 relative group cursor-pointer select-none flex items-center justify-center p-3 sm:p-5"
+            title="Click to view fullscreen"
           >
             <img
               src={images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-cover rounded-none"
+              className="max-w-full max-h-full w-auto h-auto object-contain rounded-none select-none transition-transform duration-200"
               onError={(e) => {
                 ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
               }}
             />
+
+            {/* Tap to expand indicator */}
+            <div className="absolute bottom-3 right-3 bg-white/95 border border-stone-200 px-2 py-1 flex items-center gap-1.5 text-[11px] font-bold text-stone-700 shadow-2xs pointer-events-none opacity-85 group-hover:opacity-100 transition-opacity">
+              <Maximize2 size={12} className="text-[#E8272A]" />
+              <span className="hidden sm:inline">Tap to expand</span>
+            </div>
 
             {/* Sold Out Overlay */}
             {currentStock === 0 && (
@@ -275,14 +282,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   type="button"
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-none overflow-hidden border-2 transition-all ${
-                    i === selectedImage ? 'border-[#E8272A] shadow-xs' : 'border-gray-200 opacity-70 hover:opacity-100'
+                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-none overflow-hidden border-2 transition-all p-1 flex items-center justify-center ${
+                    i === selectedImage ? 'border-[#E8272A] shadow-2xs' : 'border-stone-200 opacity-70 hover:opacity-100'
                   }`}
                 >
                   <img
                     src={img}
                     alt={`${product.name} preview ${i + 1}`}
-                    className="w-full h-full object-cover rounded-none"
+                    className="max-w-full max-h-full w-auto h-auto object-contain rounded-none"
                     onError={(e) => {
                       ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
                     }}
@@ -293,8 +300,8 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           )}
         </div>
 
-        {/* Right Column: Details & Actions (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col justify-between">
+        {/* Right Column: Details & Actions (6 cols) */}
+        <div className="lg:col-span-6 flex flex-col justify-between">
           <div>
             {/* Category & Badge */}
             {product.category && (
@@ -726,11 +733,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 href={`/product/${item.slug}`}
                 className="group block bg-white border border-gray-200 hover:border-gray-900 rounded-none p-3 transition-all"
               >
-                <div className="aspect-square bg-gray-50 rounded-none overflow-hidden mb-2">
+                <div className="aspect-square bg-[#FAF9F6] rounded-none overflow-hidden mb-2 flex items-center justify-center p-2 border border-stone-100">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="max-w-full max-h-full object-contain rounded-none select-none"
                     onError={(e) => {
                       ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
                     }}
