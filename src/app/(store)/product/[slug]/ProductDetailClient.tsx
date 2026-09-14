@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   ShoppingCart,
@@ -16,7 +16,6 @@ import {
   Heart,
   Star,
   MapPin,
-  ZoomIn,
   X,
   Clock,
   Award,
@@ -60,12 +59,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || null)
   const [quantity, setQuantity] = useState(1)
-
-  // Image Zoom & Lightbox
-  const [isZoomed, setIsZoomed] = useState(false)
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
   const [lightboxOpen, setLightboxOpen] = useState(false)
-  const imageContainerRef = useRef<HTMLDivElement>(null)
 
   // Kinwat Locality & Pincode Checker
   const [pincodeInput, setPincodeInput] = useState('431804')
@@ -117,15 +111,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
       // Storage unavailable
     }
   }, [product.id, currentPrice, images, product.name, product.mrp, product.slug, product.category?.name])
-
-  // Mouse move zoom calculation
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageContainerRef.current) return
-    const rect = imageContainerRef.current.getBoundingClientRect()
-    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100))
-    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100))
-    setMousePos({ x, y })
-  }
 
   // Pincode & Locality Validation
   const handleCheckPincode = (value?: string) => {
@@ -220,32 +205,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-        {/* Left Column: Images & Zoom (7 cols) */}
+        {/* Left Column: Images (7 cols) */}
         <div className="lg:col-span-7">
           {/* Main Image Container */}
           <div
-            ref={imageContainerRef}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsZoomed(true)}
-            onMouseLeave={() => setIsZoomed(false)}
             onClick={() => setLightboxOpen(true)}
-            className="aspect-square bg-gray-100 rounded-none border border-gray-200 overflow-hidden mb-3 relative group cursor-crosshair select-none"
+            className="aspect-square bg-stone-50 rounded-none border border-stone-200 overflow-hidden mb-3 relative group cursor-pointer select-none"
+            title="Click to view full image"
           >
             <img
               src={images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-cover transition-transform duration-100 ease-out rounded-none"
-              style={
-                isZoomed
-                  ? {
-                      transformOrigin: `${mousePos.x}% ${mousePos.y}%`,
-                      transform: 'scale(2.2)',
-                    }
-                  : {
-                      transformOrigin: 'center center',
-                      transform: 'scale(1)',
-                    }
-              }
+              className="w-full h-full object-cover rounded-none"
               onError={(e) => {
                 ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
               }}
@@ -266,12 +237,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 {discountPercent}% OFF
               </div>
             )}
-
-            {/* Zoom Cue Indicator */}
-            <div className="absolute bottom-3 right-3 bg-white/95 text-gray-800 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-none border border-gray-200 shadow-xs flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              <ZoomIn size={12} className="text-[#E8272A]" />
-              <span>Hover to Zoom • Click to Expand</span>
-            </div>
 
             {/* Carousel Nav Arrows */}
             {images.length > 1 && (

@@ -63,34 +63,34 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ─── 1. TOP ANNOUNCEMENT BAR (Burgundy Red) ─── */}
-      <div className="bg-[#780A16] text-white text-xs py-2 px-3 sm:px-4 border-b border-red-950/20">
+      {/* ─── 1. TOP ANNOUNCEMENT BAR (Regal Onyx & Ruby) ─── */}
+      <div className="bg-[#181113] text-white text-xs py-2 px-3 sm:px-4 border-b border-white/10">
         <div className="container-custom flex items-center justify-between gap-2">
           {/* Left: Express Pill + Delivery info */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 lg:flex-initial">
-            <span className="inline-flex items-center gap-1 border border-white/40 bg-white/10 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide uppercase flex-shrink-0">
+            <span className="inline-flex items-center gap-1 border border-[#E8272A]/50 bg-[#E8272A]/20 px-2 py-0.5 rounded-none text-[10px] sm:text-[11px] font-black tracking-wider uppercase flex-shrink-0 text-rose-200">
               <Zap size={11} className="text-amber-300" />
               <span>Express Store</span>
             </span>
-            <span className="flex items-center gap-1.5 font-medium text-[11px] sm:text-xs truncate">
-              <span>30–45 Mins Express Delivery in <strong className="font-bold">Kinwat</strong></span>
+            <span className="flex items-center gap-1.5 font-medium text-[11px] sm:text-xs truncate text-stone-200">
+              <span>30–45 Mins Express Delivery in <strong className="font-bold text-white">Kinwat</strong></span>
               <span className="hidden sm:inline">& nearby areas</span>
             </span>
-            <span className="hidden md:inline text-white/50">|</span>
-            <span className="hidden md:inline text-white/90 text-xs">
+            <span className="hidden md:inline text-white/30">|</span>
+            <span className="hidden md:inline text-stone-300 text-xs font-normal">
               Free delivery on orders above ₹299
             </span>
           </div>
 
           {/* Right: Contact & Location */}
-          <div className="hidden lg:flex items-center gap-4 text-white/90 font-medium text-[11px]">
+          <div className="hidden lg:flex items-center gap-4 text-stone-300 font-medium text-[11px]">
             <a href="tel:+919422000000" className="flex items-center gap-1 hover:text-white transition-colors">
-              <Phone size={12} className="text-amber-300" />
+              <Phone size={12} className="text-amber-400" />
               <span>Call Support: +91 94220 00000</span>
             </a>
-            <span className="text-white/40">|</span>
-            <div className="flex items-center gap-1 text-white/90">
-              <MapPin size={12} className="text-amber-300" />
+            <span className="text-white/20">|</span>
+            <div className="flex items-center gap-1 text-stone-200">
+              <MapPin size={12} className="text-rose-400" />
               <span>In Kinwat, MH</span>
             </div>
           </div>
@@ -98,22 +98,22 @@ export default function Navbar() {
       </div>
 
       {/* ─── 2. MAIN NAVBAR ─── */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
-        <div className="container-custom py-3.5">
+      <header className="sticky top-0 z-50 bg-white shadow-xs border-b border-stone-200">
+        <div className="container-custom py-3 sm:py-3.5">
           <div className="flex items-center justify-between gap-3 md:gap-6">
             {/* Modern Logo */}
             <Logo size="md" />
 
-            {/* Delivering To Widget */}
-            <div className="hidden xl:flex items-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200/80 px-3.5 py-2 rounded-2xl cursor-pointer transition-colors flex-shrink-0">
-              <div className="w-7 h-7 rounded-full bg-red-100 flex items-center justify-center text-primary-600 flex-shrink-0">
-                <MapPin size={14} className="text-[#E8272A]" />
+            {/* Delivering To Widget (Architectural Hard Corners) */}
+            <div className="hidden xl:flex items-center gap-2.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 px-3 py-1.5 rounded-none cursor-pointer transition-colors flex-shrink-0">
+              <div className="w-7 h-7 rounded-none bg-rose-50 border border-rose-200 flex items-center justify-center text-[#E8272A] flex-shrink-0">
+                <MapPin size={13} className="text-[#E8272A]" />
               </div>
               <div className="text-left text-xs leading-tight">
-                <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Delivering To</div>
-                <div className="font-bold text-gray-900 flex items-center gap-1">
+                <div className="text-[9px] text-stone-400 font-extrabold uppercase tracking-widest">Delivering To</div>
+                <div className="font-bold text-stone-900 flex items-center gap-1">
                   <span>Kinwat Bazar, 431804</span>
-                  <ChevronDown size={12} className="text-gray-400" />
+                  <ChevronDown size={12} className="text-stone-400" />
                 </div>
               </div>
             </div>
@@ -124,17 +124,17 @@ export default function Navbar() {
             </div>
 
             {/* Right Action Icons */}
-            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {/* Wishlist Button */}
               <button
                 onClick={openWishlistDrawer}
-                className="relative p-2 text-gray-700 hover:text-[#E8272A] hover:bg-rose-50 transition-colors hidden sm:flex items-center justify-center border border-transparent hover:border-gray-200"
+                className="relative p-2 text-stone-700 hover:text-[#E8272A] hover:bg-rose-50 transition-colors hidden sm:flex items-center justify-center border border-stone-200 rounded-none cursor-pointer"
                 title="Saved Items"
                 aria-label="View Wishlist"
               >
-                <Heart size={20} className={wishlistCount > 0 ? 'text-[#E8272A] fill-[#E8272A]' : 'text-gray-700'} />
+                <Heart size={18} className={wishlistCount > 0 ? 'text-[#E8272A] fill-[#E8272A]' : 'text-stone-700'} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-[#E8272A] text-white text-[9px] font-black rounded-none px-1 flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] bg-[#E8272A] text-white text-[9px] font-black rounded-none px-1 flex items-center justify-center shadow-2xs">
                     {wishlistCount}
                   </span>
                 )}
@@ -143,9 +143,9 @@ export default function Navbar() {
               {/* User Account / Sign In */}
               <Link
                 href={user ? '/account' : '/login'}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:text-[#E8272A] hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-stone-800 hover:text-[#E8272A] hover:bg-stone-50 transition-colors border border-stone-200 rounded-none"
               >
-                <User size={18} />
+                <User size={16} />
                 <span className="hidden sm:inline">
                   {user ? (user.name || 'Account') : 'Sign In'}
                 </span>
@@ -154,27 +154,27 @@ export default function Navbar() {
               {/* Cart Drawer Trigger Button */}
               <button
                 onClick={openCartDrawer}
-                className="flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2.5 transition-all shadow-md shadow-red-500/20 active:scale-95 cursor-pointer"
+                className="flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2 rounded-none transition-all shadow-xs active:scale-95 cursor-pointer"
                 title="Open Shopping Bag"
                 aria-label="Open Shopping Bag"
               >
                 <div className="relative">
-                  <ShoppingCart size={16} />
+                  <ShoppingCart size={15} />
                   {cartCount > 0 && (
                     <span className="absolute -top-2 -right-2 w-4 h-4 bg-amber-400 text-gray-950 text-[10px] font-black rounded-none flex items-center justify-center shadow-xs">
                       {cartCount}
                     </span>
                   )}
                 </div>
-                <span>Cart: ₹{cartTotal > 0 ? cartTotal.toLocaleString('en-IN') : 0}</span>
+                <span>Bag: ₹{cartTotal > 0 ? cartTotal.toLocaleString('en-IN') : 0}</span>
               </button>
 
               {/* Mobile menu trigger */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-xl"
+                className="md:hidden p-2 text-stone-700 hover:bg-stone-100 border border-stone-200 rounded-none"
               >
-                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
             </div>
           </div>
@@ -186,27 +186,27 @@ export default function Navbar() {
         </div>
 
         {/* ─── 3. SUB-NAVIGATION CATEGORIES BAR ─── */}
-        <div className="border-t border-gray-100 bg-white hidden md:block">
+        <div className="border-t border-stone-200/80 bg-white hidden md:block">
           <div className="container-custom">
             <nav className="flex items-center gap-6 overflow-x-auto py-2 text-xs font-semibold whitespace-nowrap scrollbar-hide no-scrollbar">
               {navCategories.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center gap-1.5 py-1.5 transition-colors ${
+                  className={`flex items-center gap-1.5 py-1 transition-colors ${
                     item.isDeal
-                      ? 'text-amber-600 hover:text-amber-700 font-bold ml-auto'
-                      : 'text-gray-700 hover:text-[#E8272A]'
+                      ? 'text-[#E8272A] hover:text-[#CC1A1D] font-black uppercase tracking-wider ml-auto'
+                      : 'text-stone-700 hover:text-[#E8272A]'
                   }`}
                 >
-                  {item.isDeal && <Sparkles size={13} className="text-amber-500 fill-amber-500" />}
+                  {item.isDeal && <Zap size={12} className="text-[#E8272A]" />}
                   <span>{item.name}</span>
                   {item.badge && (
-                    <span className="bg-rose-100 text-[#E8272A] text-[10px] font-bold px-1.5 py-0.2 rounded-full">
+                    <span className="bg-rose-100 text-[#E8272A] text-[9px] font-black px-1.5 py-0.2 rounded-none uppercase">
                       {item.badge}
                     </span>
                   )}
-                  {item.hasDropdown && <ChevronDown size={12} className="text-gray-400" />}
+                  {item.hasDropdown && <ChevronDown size={12} className="text-stone-400" />}
                 </Link>
               ))}
             </nav>

@@ -3,13 +3,23 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Clock, Shield, Truck, Star, ChevronRight, Zap, CheckCircle2, Gift, Sparkles } from 'lucide-react'
+import {
+  ShoppingCart,
+  ArrowRight,
+  Clock,
+  ShieldCheck,
+  Truck,
+  Star,
+  ChevronRight,
+  Zap,
+  Gift,
+  MapPin,
+} from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import type { Product, Category } from '@/lib/types'
 import ProductCard from '@/components/products/ProductCard'
 import { useCart } from '@/store/cart'
 import toast from 'react-hot-toast'
-
 
 const CATEGORY_IMAGES: Record<string, string> = {
   'ladies-fashion': '/images/hero-ladies.jpg',
@@ -21,6 +31,7 @@ const CATEGORY_IMAGES: Record<string, string> = {
 
 const SPOTLIGHT_SLIDES = [
   {
+    productId: 'spotlight-kundan-necklace',
     titleLine1: 'Sparkling Jewellery &',
     titleLine2: 'Festive Fashion Elegance',
     subtitle:
@@ -39,6 +50,7 @@ const SPOTLIGHT_SLIDES = [
     slug: 'kundan-choker-necklace-set',
   },
   {
+    productId: 'spotlight-anarkali-kurti',
     titleLine1: 'Designer Kurtis &',
     titleLine2: 'Festive Anarkali Sets',
     subtitle:
@@ -57,6 +69,7 @@ const SPOTLIGHT_SLIDES = [
     slug: 'anarkali-kurti-set-with-dupatta',
   },
   {
+    productId: 'spotlight-bandhani-saree',
     titleLine1: 'Traditional Sarees &',
     titleLine2: 'Royal Bridal Drapes',
     subtitle:
@@ -127,25 +140,36 @@ export default function HomePage() {
 
   const slide = SPOTLIGHT_SLIDES[currentSlide]
 
-
+  const handleQuickAddToCart = (slideItem: (typeof SPOTLIGHT_SLIDES)[0]) => {
+    addItem({
+      productId: slideItem.productId,
+      name: slideItem.productName,
+      image: slideItem.image,
+      price: slideItem.price,
+      quantity: 1,
+      stock: 12,
+      slug: slideItem.slug,
+    })
+    toast.success(`${slideItem.productName} added to bag`, { duration: 2000 })
+  }
 
   return (
-    <div className="animate-fade-in bg-[#FAFAFA]">
+    <div className="animate-fade-in bg-[#FAF9F6]">
       {/* ─── MOBILE QUICK CATEGORIES BAR (Swipeable Touch Strip) ─── */}
-      <div className="md:hidden bg-white border-b border-gray-100 py-3 px-3 overflow-x-auto scrollbar-hide no-scrollbar shadow-2xs">
-        <div className="flex items-center gap-3 w-max">
+      <div className="md:hidden bg-white border-b border-stone-200 py-3 px-3 overflow-x-auto scrollbar-hide no-scrollbar shadow-2xs">
+        <div className="flex items-center gap-2.5 w-max">
           {categories.map((cat) => {
             const catImg = CATEGORY_IMAGES[cat.slug] || '/images/hero-ladies.jpg'
             return (
               <Link
                 key={`mob-${cat.id}`}
                 href={`/category/${cat.slug}`}
-                className="flex flex-col items-center gap-1.5 w-[70px] text-center active:scale-95 transition-transform"
+                className="flex flex-col items-center gap-1.5 w-[68px] text-center active:scale-95 transition-transform"
               >
-                <div className="w-14 h-14 rounded-2xl overflow-hidden p-0.5 border-2 border-rose-200/80 shadow-xs bg-white">
-                  <img src={catImg} alt={cat.name} className="w-full h-full object-cover rounded-xl" />
+                <div className="w-14 h-14 rounded-none overflow-hidden p-0.5 border border-stone-200 bg-white shadow-2xs">
+                  <img src={catImg} alt={cat.name} className="w-full h-full object-cover rounded-none" />
                 </div>
-                <span className="text-[10px] font-bold text-gray-800 leading-tight line-clamp-1">
+                <span className="text-[10px] font-bold text-stone-800 leading-tight line-clamp-1 uppercase tracking-wider">
                   {cat.name}
                 </span>
               </Link>
@@ -154,218 +178,210 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ─── EXACT REFERENCE HERO SECTION (Warm Champagne/Cream) ─── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#FFF9EE] via-[#FFF3DD] to-[#FFF8EA] border-b border-amber-200/50 py-8 sm:py-12 lg:py-16">
-        {/* Subtle decorative sparkles */}
-        <div className="absolute top-8 left-12 text-amber-400/50 select-none pointer-events-none">
-          <Sparkles size={18} />
-        </div>
-        <div className="absolute bottom-12 left-1/3 text-amber-400/30 select-none pointer-events-none">
-          <Sparkles size={14} />
-        </div>
-        <div className="absolute top-20 right-1/4 text-amber-400/30 select-none pointer-events-none">
-          <Sparkles size={16} />
-        </div>
-
+      {/* ─── REFINED LUXURY HERO SECTION (Warm Alabaster / Stone) ─── */}
+      <section className="relative overflow-hidden bg-[#FAF8F5] border-b border-stone-200/80 py-8 sm:py-10 lg:py-12">
         <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* ── LEFT COLUMN ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* ── LEFT COLUMN: EDITORIAL HERO ── */}
             <div className="lg:col-span-7">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.35 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  {/* Active Status Pill */}
-                  <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-200/80 shadow-xs mb-5 text-xs">
+                  {/* Kinwat Express Active Tag */}
+                  <div className="inline-flex items-center gap-2 bg-white border border-stone-200 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-stone-800 shadow-2xs mb-4">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="font-extrabold text-gray-800 tracking-wide text-[11px] uppercase">
-                      Express Delivery Active in Kinwat
-                    </span>
-                    <span className="bg-amber-100 text-amber-900 font-extrabold text-[11px] px-2.5 py-0.5 rounded-full ml-1 flex items-center gap-1">
-                      <Clock size={12} className="text-[#E8272A]" />
-                      <span>30–45 Mins</span>
+                    <span>Kinwat Express Dispatch</span>
+                    <span className="text-stone-300">|</span>
+                    <span className="text-[#E8272A] flex items-center gap-1">
+                      <Clock size={12} />
+                      <span>30–45 Mins Delivery</span>
                     </span>
                   </div>
 
                   {/* Main Headline */}
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-[54px] font-bold leading-[1.12] text-[#1E1E24] mb-4">
-                    <span>{slide.titleLine1}</span>
-                    <br />
-                    <span className="bg-gradient-to-r from-[#E8272A] via-[#E03A1E] to-[#E55A00] bg-clip-text text-transparent">
-                      {slide.titleLine2}
-                    </span>
+                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-[46px] font-bold leading-[1.14] text-stone-950 mb-3 tracking-tight">
+                    <span>{slide.titleLine1}</span>{' '}
+                    <span className="text-[#E8272A] italic">{slide.titleLine2}</span>
                   </h1>
 
                   {/* Subtitle */}
-                  <p className="text-gray-600 text-sm sm:text-base lg:text-[17px] leading-relaxed mb-6 max-w-xl font-normal">
+                  <p className="text-stone-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed mb-5 max-w-xl font-normal">
                     {slide.subtitle}
                   </p>
 
-                  {/* 3 Trust Badges in Pills */}
-                  <div className="flex flex-wrap items-center gap-2.5 mb-8 text-xs font-semibold text-gray-800">
-                    <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-gray-200 shadow-xs">
-                      <CheckCircle2 size={14} className="text-emerald-600" />
-                      <span>100% Guaranteed Quality</span>
+                  {/* Architectural 3-Column Trust Strip with Hairline Dividers */}
+                  <div className="grid grid-cols-3 border-y border-stone-200/80 py-3 mb-6 text-left max-w-lg bg-stone-50/50 px-2">
+                    <div className="border-r border-stone-200 pr-3 flex items-center gap-2">
+                      <ShieldCheck size={16} className="text-[#E8272A] flex-shrink-0" />
+                      <div>
+                        <div className="text-[11px] font-black uppercase text-stone-950">100% Genuine</div>
+                        <div className="text-[10px] text-stone-500 font-medium">Direct Shop Stock</div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-gray-200 shadow-xs">
-                      <Clock size={14} className="text-[#E8272A]" />
-                      <span>Kinwat Express in 30–45 Mins</span>
+                    <div className="border-r border-stone-200 px-3 flex items-center gap-2">
+                      <Clock size={16} className="text-[#E8272A] flex-shrink-0" />
+                      <div>
+                        <div className="text-[11px] font-black uppercase text-stone-950">30–45 Mins</div>
+                        <div className="text-[10px] text-stone-500 font-medium">Kinwat Express</div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-gray-200 shadow-xs">
-                      <Gift size={14} className="text-amber-600" />
-                      <span>Complimentary Gift Wrap</span>
+                    <div className="pl-3 flex items-center gap-2">
+                      <Truck size={16} className="text-[#E8272A] flex-shrink-0" />
+                      <div>
+                        <div className="text-[11px] font-black uppercase text-stone-950">Free &gt; ₹299</div>
+                        <div className="text-[10px] text-stone-500 font-medium">Cash / UPI QR</div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex flex-wrap items-center gap-3.5 mb-8">
+                  {/* Action Buttons (Architectural Hard Corners) */}
+                  <div className="flex flex-wrap items-center gap-3 mb-6">
                     <Link
                       href={slide.buttonHref}
-                      className="inline-flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-full transition-all shadow-lg shadow-red-500/30 hover:scale-[1.02] active:scale-95"
+                      className="inline-flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white font-black text-xs uppercase tracking-widest px-7 py-3.5 rounded-none transition-all shadow-md shadow-red-500/20 active:scale-95"
                     >
                       <span>{slide.buttonText}</span>
-                      <ArrowRight size={17} />
+                      <ArrowRight size={15} />
                     </Link>
 
                     <Link
                       href="/category/ladies-fashion"
-                      className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold text-sm sm:text-base px-7 py-3.5 rounded-full border border-gray-200/90 shadow-xs transition-colors"
+                      className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-900 font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-none border border-stone-300 hover:border-stone-900 transition-colors"
                     >
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#E8272A]" />
                       <span>View Express Menu</span>
                     </Link>
                   </div>
 
-                  {/* Social Proof Avatars */}
-                  <div className="flex items-center gap-3 pt-2">
-                    <div className="flex -space-x-2">
-                      <div className="w-7 h-7 rounded-full bg-rose-200 text-rose-800 font-bold text-[11px] flex items-center justify-center border-2 border-white shadow-xs">
-                        S
-                      </div>
-                      <div className="w-7 h-7 rounded-full bg-amber-200 text-amber-800 font-bold text-[11px] flex items-center justify-center border-2 border-white shadow-xs">
-                        P
-                      </div>
-                      <div className="w-7 h-7 rounded-full bg-purple-200 text-purple-800 font-bold text-[11px] flex items-center justify-center border-2 border-white shadow-xs">
-                        A
-                      </div>
-                      <div className="w-7 h-7 rounded-full bg-[#8B101E] text-white font-bold text-[10px] flex items-center justify-center border-2 border-white shadow-xs">
-                        +4k
-                      </div>
+                  {/* Social Proof & Rating Credibility */}
+                  <div className="flex items-center gap-2.5 text-xs text-stone-600 font-medium">
+                    <div className="flex items-center gap-0.5 text-amber-500">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
+                      ))}
                     </div>
-                    <span className="text-xs text-gray-700 font-medium">
-                      <strong className="font-bold text-gray-900">4,800+</strong> Happy Customers in Kinwat & surrounding talukas
+                    <span className="font-bold text-stone-900">4.9 / 5.0</span>
+                    <span className="text-stone-300">•</span>
+                    <span>4,800+ Kinwat families served</span>
+                    <span className="text-stone-300 hidden sm:inline">•</span>
+                    <span className="text-emerald-700 font-bold hidden sm:inline flex items-center gap-1">
+                      <MapPin size={11} /> Kinwat Bazar Local Store
                     </span>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* ── RIGHT COLUMN: FEATURED SPOTLIGHT CARD (Luxury Hard-Corner Silhouette) ── */}
+            {/* ── RIGHT COLUMN: BALANCED SPOTLIGHT SHOWCASE CARD ── */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="w-full max-w-md bg-white rounded-none p-5 sm:p-6 shadow-2xl shadow-stone-900/10 border border-gray-200/90 relative">
+              <div className="w-full max-w-sm lg:max-w-md bg-white rounded-none p-4 sm:p-5 shadow-xl shadow-stone-900/5 border border-stone-200 relative">
                 {/* Spotlight Header */}
-                <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100">
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#E8272A] bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-none">
+                <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-stone-100">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#E8272A] bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-none">
                       Featured Spotlight
                     </span>
-                    <h3 className="font-serif font-bold text-gray-950 text-lg mt-1">
+                    <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base">
                       {slide.spotlightTitle}
                     </h3>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 font-bold text-[11px] px-2.5 py-1 rounded-none border border-emerald-200">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>In Stock Today</span>
+                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 font-bold text-[10px] px-2 py-0.5 rounded-none border border-emerald-200 flex-shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>In Stock</span>
                   </span>
                 </div>
 
-                {/* Uncropped Rectangular Showcase Frame (No circular avatar crop) */}
+                {/* Streamlined Showcase Frame (Proportioned to avoid viewport overflow) */}
                 <Link
                   href={`/product/${slide.slug}`}
-                  className="block relative aspect-[4/3] w-full overflow-hidden bg-gray-100 border border-gray-200 rounded-none group cursor-pointer"
+                  className="block relative aspect-[16/10] w-full overflow-hidden bg-stone-100 border border-stone-200 rounded-none group cursor-pointer"
                 >
                   <img
                     src={slide.image}
                     alt={slide.productName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-60 group-hover:opacity-40 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-60 group-hover:opacity-30 transition-opacity" />
 
                   {/* Badges on top of card */}
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-[#E8272A] text-white text-[11px] font-black px-2.5 py-1 rounded-none uppercase tracking-wider shadow-sm">
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className="bg-[#E8272A] text-white text-[10px] font-black px-2 py-0.5 rounded-none uppercase tracking-wider shadow-2xs">
                       {slide.discount}
                     </span>
                   </div>
 
-                  <div className="absolute top-3 right-3">
-                    <span className="inline-flex items-center gap-1.5 bg-black/75 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-none shadow-sm border border-white/20">
-                      <Clock size={11} className="text-amber-400" />
+                  <div className="absolute top-2.5 right-2.5">
+                    <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-none shadow-2xs border border-white/20">
+                      <Clock size={10} className="text-amber-400" />
                       <span>30–45m Kinwat</span>
                     </span>
-                  </div>
-
-                  <div className="absolute bottom-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity bg-white/95 text-gray-900 text-[10px] font-bold px-2.5 py-1 rounded-none shadow-md flex items-center gap-1">
-                    <span>View Product</span>
-                    <ArrowRight size={11} className="text-[#E8272A]" />
                   </div>
                 </Link>
 
                 {/* Product Details & Pricing */}
-                <div className="mt-4 pt-1">
-                  <div className="flex items-start justify-between gap-3 mb-1">
-                    <Link
-                      href={`/product/${slide.slug}`}
-                      className="font-bold text-gray-950 text-base sm:text-lg leading-snug hover:text-[#E8272A] transition-colors line-clamp-1"
-                    >
-                      {slide.productName}
-                    </Link>
-                  </div>
+                <div className="mt-3">
+                  <Link
+                    href={`/product/${slide.slug}`}
+                    className="block font-bold text-stone-950 text-sm sm:text-base leading-snug hover:text-[#E8272A] transition-colors truncate"
+                  >
+                    {slide.productName}
+                  </Link>
 
-                  <p className="text-xs text-gray-500 mb-4 line-clamp-1">
+                  <p className="text-[11px] text-stone-500 mb-2.5 truncate font-normal">
                     {slide.productDesc}
                   </p>
 
                   {/* Pricing Bar */}
-                  <div className="flex items-center justify-between gap-2 p-3 bg-[#FAF8F5] border border-amber-200/60 rounded-none mb-4">
+                  <div className="flex items-center justify-between gap-2 p-2.5 bg-stone-50 border border-stone-200 rounded-none mb-3">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-black text-[#E8272A]">
+                      <span className="text-xl font-black text-[#E8272A]">
                         ₹{slide.price.toLocaleString('en-IN')}
                       </span>
-                      <span className="text-xs text-gray-400 line-through">
+                      <span className="text-xs text-stone-400 line-through">
                         ₹{slide.mrp.toLocaleString('en-IN')}
                       </span>
                     </div>
-                    <span className="bg-emerald-100 text-emerald-800 text-[11px] font-black uppercase px-2 py-0.5 rounded-none">
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5 rounded-none">
                       {slide.saveText}
                     </span>
                   </div>
 
-                  {/* Full Width Order Now Action Button */}
-                  <Link
-                    href={`/product/${slide.slug}`}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white font-black text-xs uppercase tracking-widest py-3.5 rounded-none transition-all shadow-md shadow-red-500/20 active:scale-[0.99] text-center"
-                  >
-                    <span>Order Now</span>
-                    <ArrowRight size={14} />
-                  </Link>
+                  {/* Dual 1-Click Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleQuickAddToCart(slide)}
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#E8272A] hover:bg-[#CC1A1D] text-white font-black text-[11px] uppercase tracking-wider py-2.5 rounded-none transition-all shadow-xs active:scale-95 cursor-pointer"
+                      title="Add to Shopping Bag"
+                    >
+                      <ShoppingCart size={13} />
+                      <span>Add to Bag</span>
+                    </button>
+                    <Link
+                      href={`/product/${slide.slug}`}
+                      className="inline-flex items-center justify-center gap-1.5 border border-stone-300 hover:border-stone-900 bg-white hover:bg-stone-50 text-stone-900 font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-none transition-colors text-center"
+                    >
+                      <span>Order Now</span>
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
                 </div>
 
                 {/* Architectural Slider Indicators */}
-                <div className="flex justify-center items-center gap-2 mt-5 pt-3 border-t border-gray-100">
+                <div className="flex justify-center items-center gap-1.5 mt-3 pt-2.5 border-t border-stone-100">
                   {SPOTLIGHT_SLIDES.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setCurrentSlide(i)}
                       aria-label={`Slide ${i + 1}`}
-                      className={`h-1.5 transition-all duration-300 rounded-none ${
+                      className={`h-1 transition-all duration-300 rounded-none cursor-pointer ${
                         i === currentSlide
-                          ? 'w-8 bg-[#E8272A]'
-                          : 'w-3 bg-gray-200 hover:bg-gray-400'
+                          ? 'w-7 bg-[#E8272A]'
+                          : 'w-2.5 bg-stone-200 hover:bg-stone-400'
                       }`}
                     />
                   ))}
@@ -393,7 +409,7 @@ export default function HomePage() {
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="skeleton h-56 rounded-2xl" />
+                <div key={i} className="skeleton h-56 rounded-none" />
               ))}
             </div>
           ) : (
@@ -459,7 +475,7 @@ export default function HomePage() {
             {loading ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="skeleton h-80 rounded-2xl" />
+                  <div key={i} className="skeleton h-80 rounded-none" />
                 ))}
               </div>
             ) : (
@@ -599,7 +615,7 @@ export default function HomePage() {
             {loading ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="skeleton h-80 rounded-2xl" />
+                  <div key={i} className="skeleton h-80 rounded-none" />
                 ))}
               </div>
             ) : (
