@@ -166,13 +166,42 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[]
-  addItem: (item: CartItem) => void
+  isDrawerOpen: boolean
+  openDrawer: () => void
+  closeDrawer: () => void
+  toggleDrawer: () => void
+  addItem: (item: CartItem, openDrawer?: boolean) => void
   removeItem: (productId: string, variantId?: string) => void
   updateQuantity: (productId: string, quantity: number, variantId?: string) => void
   clearCart: () => void
   getTotalItems: () => number
   getSubtotal: () => number
   getTotalPrice: () => number
+}
+
+// Wishlist types (persisted in localStorage/Zustand)
+export interface WishlistItem {
+  productId: string
+  name: string
+  price: number
+  mrp?: number
+  image?: string
+  slug: string
+  stock: number
+  categoryName?: string
+}
+
+export interface WishlistState {
+  items: WishlistItem[]
+  isDrawerOpen: boolean
+  openDrawer: () => void
+  closeDrawer: () => void
+  toggleDrawer: () => void
+  addItem: (item: WishlistItem) => void
+  removeItem: (productId: string) => void
+  isInWishlist: (productId: string) => boolean
+  clearWishlist: () => void
+  getTotalItems: () => number
 }
 
 // API response types

@@ -8,8 +8,13 @@ export const useCart = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      isDrawerOpen: false,
 
-      addItem: (newItem: CartItem) => {
+      openDrawer: () => set({ isDrawerOpen: true }),
+      closeDrawer: () => set({ isDrawerOpen: false }),
+      toggleDrawer: () => set((state) => ({ isDrawerOpen: !state.isDrawerOpen })),
+
+      addItem: (newItem: CartItem, openDrawer = true) => {
         set((state) => {
           const existingIndex = state.items.findIndex(
             (item) =>
@@ -17,15 +22,20 @@ export const useCart = create<CartState>()(
               item.variantId === newItem.variantId
           )
 
+          let updatedItems: CartItem[]
           if (existingIndex >= 0) {
-            const updatedItems = [...state.items]
+            updatedItems = [...state.items]
             const existing = updatedItems[existingIndex]
             const newQty = Math.min(existing.quantity + newItem.quantity, existing.stock)
             updatedItems[existingIndex] = { ...existing, quantity: newQty }
-            return { items: updatedItems }
+          } else {
+            updatedItems = [...state.items, newItem]
           }
 
-          return { items: [...state.items, newItem] }
+          return {
+            items: updatedItems,
+            isDrawerOpen: openDrawer ? true : state.isDrawerOpen,
+          }
         })
       },
 
@@ -79,6 +89,7 @@ export const useCart = create<CartState>()(
     }),
     {
       name: 'pari-cart',
+      partialize: (state) => ({ items: state.items }),
     }
   )
 )

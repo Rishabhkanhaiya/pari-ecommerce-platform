@@ -2,17 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Grid, Zap, ShoppingBag, User } from 'lucide-react'
+import { Home, Grid, Heart, ShoppingBag, User } from 'lucide-react'
 import { useCart } from '@/store/cart'
+import { useWishlist } from '@/store/wishlist'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 export default function MobileBottomNav() {
   const pathname = usePathname()
-  const { getTotalItems, getTotalPrice } = useCart()
+  const { getTotalItems, openDrawer: openCartDrawer } = useCart()
+  const { getTotalItems: getWishlistCount, openDrawer: openWishlistDrawer } = useWishlist()
   const [userLoggedIn, setUserLoggedIn] = useState(false)
   const cartCount = getTotalItems()
-  const cartTotal = getTotalPrice()
+  const wishlistCount = getWishlistCount()
 
   useEffect(() => {
     const supabase = createClient()
@@ -46,17 +48,17 @@ export default function MobileBottomNav() {
       isActive: pathname.startsWith('/category'),
     },
     {
-      label: 'Express',
-      href: '/category/ladies-fashion',
-      icon: Zap,
-      badge: 'Fast',
+      label: 'Wishlist',
+      icon: Heart,
+      count: wishlistCount,
+      onClick: () => openWishlistDrawer(),
       isActive: false,
     },
     {
-      label: 'Cart',
-      href: '/cart',
+      label: 'Bag',
       icon: ShoppingBag,
       count: cartCount,
+      onClick: () => openCartDrawer(),
       isActive: pathname === '/cart',
     },
     {
@@ -72,33 +74,18 @@ export default function MobileBottomNav() {
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`relative flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all duration-200 active:scale-90 ${
-                item.isActive
-                  ? 'text-[#E8272A]'
-                  : 'text-gray-500 hover:text-gray-900'
-              }`}
-            >
+          const content = (
+            <>
               <div className="relative">
                 <Icon
                   size={20}
                   className={`transition-transform ${item.isActive ? 'scale-110 stroke-[2.5]' : 'stroke-2'}`}
                 />
 
-                {/* Cart Badge */}
+                {/* Badge Count */}
                 {item.count !== undefined && item.count > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 min-w-[17px] h-[17px] bg-[#E8272A] text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 shadow-xs border border-white">
+                  <span className="absolute -top-1.5 -right-2.5 min-w-[17px] h-[17px] bg-[#E8272A] text-white text-[9px] font-black rounded-none flex items-center justify-center px-1 shadow-xs border border-white">
                     {item.count > 99 ? '99+' : item.count}
-                  </span>
-                )}
-
-                {/* Fast Badge */}
-                {item.badge && (
-                  <span className="absolute -top-1.5 -right-3 bg-amber-400 text-gray-950 text-[8px] font-black uppercase px-1 py-0.2 rounded-full leading-tight shadow-2xs">
-                    {item.badge}
                   </span>
                 )}
               </div>
@@ -115,6 +102,37 @@ export default function MobileBottomNav() {
               {item.isActive && (
                 <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-[#E8272A]" />
               )}
+            </>
+          )
+
+          const className = `relative flex flex-col items-center justify-center py-1 px-2.5 rounded-none transition-all duration-200 active:scale-90 ${
+            item.isActive
+              ? 'text-[#E8272A]'
+              : 'text-gray-500 hover:text-gray-900'
+          }`
+
+          if (item.onClick) {
+            return (
+              <button
+                key={item.label}
+                onClick={item.onClick}
+                className={className}
+                type="button"
+                aria-label={item.label}
+              >
+                {content}
+              </button>
+            )
+          }
+
+          return (
+            <Link
+              key={item.label}
+              href={item.href!}
+              className={className}
+              aria-label={item.label}
+            >
+              {content}
             </Link>
           )
         })}

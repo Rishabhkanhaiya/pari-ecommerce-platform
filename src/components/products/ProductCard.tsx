@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { ShoppingCart, Heart, Clock } from 'lucide-react'
 import { useCart } from '@/store/cart'
+import { useWishlist } from '@/store/wishlist'
 import type { Product } from '@/lib/types'
 import toast from 'react-hot-toast'
 
@@ -13,7 +13,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
-  const [isWishlisted, setIsWishlisted] = useState(false)
+  const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist()
+  const isWishlisted = wishlistItems.some((item) => item.productId === product.id)
 
   const discountPercent =
     product.mrp && product.mrp > product.price
@@ -40,7 +41,29 @@ export default function ProductCard({ product }: ProductCardProps) {
       stock: product.stock,
       slug: product.slug,
     })
-    toast.success(`${product.name} added to cart`, { duration: 2000 })
+    toast.success(`${product.name} added to bag`, { duration: 2000 })
+  }
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (isWishlisted) {
+      removeFromWishlist(product.id)
+      toast.success('Removed from wishlist', { duration: 1500 })
+    } else {
+      addToWishlist({
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        mrp: product.mrp,
+        image: primaryImage,
+        slug: product.slug,
+        stock: product.stock,
+        categoryName: product.category?.name,
+      })
+      toast.success('Saved to wishlist', { duration: 1500 })
+    }
   }
 
   return (
@@ -88,14 +111,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Wishlist Square Button */}
         <button
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            setIsWishlisted(!isWishlisted)
-            toast.success(isWishlisted ? 'Removed from wishlist' : 'Saved to wishlist', {
-              duration: 1500,
-            })
-          }}
+          onClick={handleToggleWishlist}
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           className="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/95 rounded-none shadow-xs flex items-center justify-center text-gray-400 hover:text-[#E8272A] border border-gray-100 transition-colors z-10"
         >
           <Heart

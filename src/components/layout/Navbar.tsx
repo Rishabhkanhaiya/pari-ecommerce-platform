@@ -6,15 +6,20 @@ import { ShoppingCart, Search, Menu, X, User, MapPin, ChevronDown, Heart, Phone,
 import Logo from '@/components/common/Logo'
 import SearchBar from '@/components/layout/SearchBar'
 import { useCart } from '@/store/cart'
+import { useWishlist } from '@/store/wishlist'
+import CartDrawer from '@/components/cart/CartDrawer'
+import WishlistDrawer from '@/components/wishlist/WishlistDrawer'
 import { createClient } from '@/lib/supabase/client'
 import type { Profile } from '@/lib/types'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [user, setUser] = useState<Profile | null>(null)
-  const { getTotalItems, getTotalPrice } = useCart()
+  const { getTotalItems, getTotalPrice, openDrawer: openCartDrawer } = useCart()
+  const { getTotalItems: getWishlistCount, openDrawer: openWishlistDrawer } = useWishlist()
   const cartCount = getTotalItems()
   const cartTotal = getTotalPrice()
+  const wishlistCount = getWishlistCount()
 
   useEffect(() => {
     const supabase = createClient()
@@ -120,22 +125,25 @@ export default function Navbar() {
 
             {/* Right Action Icons */}
             <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
-              {/* Wishlist Icon */}
-              <Link
-                href="/cart"
-                className="relative p-2 text-gray-700 hover:text-[#E8272A] hover:bg-red-50 rounded-xl transition-colors hidden sm:flex items-center justify-center"
-                title="Wishlist"
+              {/* Wishlist Button */}
+              <button
+                onClick={openWishlistDrawer}
+                className="relative p-2 text-gray-700 hover:text-[#E8272A] hover:bg-rose-50 transition-colors hidden sm:flex items-center justify-center border border-transparent hover:border-gray-200"
+                title="Saved Items"
+                aria-label="View Wishlist"
               >
-                <Heart size={20} />
-                <span className="absolute 0 top-0.5 right-0.5 w-4 h-4 bg-amber-400 text-gray-900 text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
-                  3
-                </span>
-              </Link>
+                <Heart size={20} className={wishlistCount > 0 ? 'text-[#E8272A] fill-[#E8272A]' : 'text-gray-700'} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-[#E8272A] text-white text-[9px] font-black rounded-none px-1 flex items-center justify-center shadow-xs">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
 
               {/* User Account / Sign In */}
               <Link
                 href={user ? '/account' : '/login'}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:text-[#E8272A] hover:bg-gray-50 rounded-xl transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:text-[#E8272A] hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
               >
                 <User size={18} />
                 <span className="hidden sm:inline">
@@ -143,21 +151,23 @@ export default function Navbar() {
                 </span>
               </Link>
 
-              {/* Cart Button with Total */}
-              <Link
-                href="/cart"
-                className="flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white text-xs font-bold px-4 py-2.5 rounded-full transition-all shadow-md shadow-red-500/20 active:scale-95"
+              {/* Cart Drawer Trigger Button */}
+              <button
+                onClick={openCartDrawer}
+                className="flex items-center gap-2 bg-[#E8272A] hover:bg-[#CC1A1D] text-white text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2.5 transition-all shadow-md shadow-red-500/20 active:scale-95 cursor-pointer"
+                title="Open Shopping Bag"
+                aria-label="Open Shopping Bag"
               >
                 <div className="relative">
                   <ShoppingCart size={16} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 w-4 h-4 bg-amber-400 text-gray-950 text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
+                    <span className="absolute -top-2 -right-2 w-4 h-4 bg-amber-400 text-gray-950 text-[10px] font-black rounded-none flex items-center justify-center shadow-xs">
                       {cartCount}
                     </span>
                   )}
                 </div>
-                <span>Cart: ₹{cartTotal > 0 ? cartTotal : 0}</span>
-              </Link>
+                <span>Cart: ₹{cartTotal > 0 ? cartTotal.toLocaleString('en-IN') : 0}</span>
+              </button>
 
               {/* Mobile menu trigger */}
               <button
@@ -222,11 +232,28 @@ export default function Navbar() {
                   )}
                 </Link>
               ))}
-              <div className="border-t border-gray-100 pt-2 mt-1">
+              <div className="border-t border-gray-100 pt-2 mt-1 space-y-1">
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false)
+                    openWishlistDrawer()
+                  }}
+                  className="w-full text-left py-2 px-3 rounded-none text-gray-700 hover:bg-rose-50 hover:text-[#E8272A] flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <Heart size={16} />
+                    <span>My Wishlist</span>
+                  </div>
+                  {wishlistCount > 0 && (
+                    <span className="bg-[#E8272A] text-white text-[10px] font-black px-1.5 py-0.2">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </button>
                 <Link
                   href={user ? '/account' : '/login'}
                   onClick={() => setIsMenuOpen(false)}
-                  className="py-2 px-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-[#E8272A] flex items-center gap-2"
+                  className="py-2 px-3 rounded-none text-gray-700 hover:bg-rose-50 hover:text-[#E8272A] flex items-center gap-2"
                 >
                   <User size={16} />
                   <span>{user ? 'My Profile & Orders' : 'Sign In / Register'}</span>
@@ -236,6 +263,10 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      {/* Global Slide-Over Drawers */}
+      <CartDrawer />
+      <WishlistDrawer />
     </>
   )
 }
