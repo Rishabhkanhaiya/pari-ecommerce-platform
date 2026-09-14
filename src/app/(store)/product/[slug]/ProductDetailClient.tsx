@@ -211,20 +211,20 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* Main Image Container */}
           <div
             onClick={() => setLightboxOpen(true)}
-            className="aspect-square max-h-[480px] sm:max-h-[520px] w-full bg-[#FAF9F6] rounded-none border border-stone-200 overflow-hidden mb-3 relative group cursor-pointer select-none flex items-center justify-center p-3 sm:p-5"
+            className="aspect-square max-h-[480px] sm:max-h-[520px] w-full bg-[#FAF9F6] rounded-none border border-stone-200 overflow-hidden mb-3 relative cursor-pointer select-none flex items-center justify-center p-3 sm:p-5"
             title="Click to view fullscreen"
           >
             <img
               src={images[selectedImage]}
               alt={product.name}
-              className="max-w-full max-h-full w-auto h-auto object-contain rounded-none select-none transition-transform duration-200"
+              className="max-w-full max-h-full w-auto h-auto object-contain rounded-none select-none"
               onError={(e) => {
                 ;(e.currentTarget as HTMLImageElement).src = '/images/placeholder-product.jpg'
               }}
             />
 
             {/* Tap to expand indicator */}
-            <div className="absolute bottom-3 right-3 bg-white/95 border border-stone-200 px-2 py-1 flex items-center gap-1.5 text-[11px] font-bold text-stone-700 shadow-2xs pointer-events-none opacity-85 group-hover:opacity-100 transition-opacity">
+            <div className="absolute bottom-3 right-3 bg-white/95 border border-stone-200 px-2 py-1 flex items-center gap-1.5 text-[11px] font-bold text-stone-700 shadow-2xs pointer-events-none opacity-85">
               <Maximize2 size={12} className="text-[#E8272A]" />
               <span className="hidden sm:inline">Tap to expand</span>
             </div>
