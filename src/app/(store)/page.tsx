@@ -178,8 +178,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ─── REFINED LUXURY HERO SECTION (Warm Alabaster / Stone) ─── */}
-      <section className="relative overflow-hidden bg-[#FAF8F5] border-b border-stone-200/80 py-8 sm:py-10 lg:py-12">
+      {/* ─── REFINED LUXURY HERO SECTION (Warm Festive Champagne / Light Yellowish) ─── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF5] via-[#FFF5E0] to-[#FFF9EB] border-b border-amber-200/70 py-8 sm:py-10 lg:py-12">
         <div className="container-custom relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* ── LEFT COLUMN: EDITORIAL HERO ── */}
@@ -193,10 +193,10 @@ export default function HomePage() {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Kinwat Express Active Tag */}
-                  <div className="inline-flex items-center gap-2 bg-white border border-stone-200 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-stone-800 shadow-2xs mb-4">
+                  <div className="inline-flex items-center gap-2 bg-white/95 border border-amber-200/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-stone-800 shadow-2xs mb-4">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span>Kinwat Express Dispatch</span>
-                    <span className="text-stone-300">|</span>
+                    <span className="text-amber-300">|</span>
                     <span className="text-[#E8272A] flex items-center gap-1">
                       <Clock size={12} />
                       <span>30–45 Mins Delivery</span>
@@ -215,15 +215,15 @@ export default function HomePage() {
                   </p>
 
                   {/* Architectural 3-Column Trust Strip with Hairline Dividers */}
-                  <div className="grid grid-cols-3 border-y border-stone-200/80 py-3 mb-6 text-left max-w-lg bg-stone-50/50 px-2">
-                    <div className="border-r border-stone-200 pr-3 flex items-center gap-2">
+                  <div className="grid grid-cols-3 border-y border-amber-200/70 py-3 mb-6 text-left max-w-lg bg-white/70 backdrop-blur-xs px-2 shadow-2xs">
+                    <div className="border-r border-amber-200/60 pr-3 flex items-center gap-2">
                       <ShieldCheck size={16} className="text-[#E8272A] flex-shrink-0" />
                       <div>
                         <div className="text-[11px] font-black uppercase text-stone-950">100% Genuine</div>
                         <div className="text-[10px] text-stone-500 font-medium">Direct Shop Stock</div>
                       </div>
                     </div>
-                    <div className="border-r border-stone-200 px-3 flex items-center gap-2">
+                    <div className="border-r border-amber-200/60 px-3 flex items-center gap-2">
                       <Clock size={16} className="text-[#E8272A] flex-shrink-0" />
                       <div>
                         <div className="text-[11px] font-black uppercase text-stone-950">30–45 Mins</div>
@@ -251,7 +251,7 @@ export default function HomePage() {
 
                     <Link
                       href="/category/ladies-fashion"
-                      className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-900 font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-none border border-stone-300 hover:border-stone-900 transition-colors"
+                      className="inline-flex items-center gap-2 bg-white hover:bg-amber-50/50 text-stone-900 font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-none border border-stone-300 hover:border-stone-900 transition-colors"
                     >
                       <span>View Express Menu</span>
                     </Link>
@@ -265,9 +265,9 @@ export default function HomePage() {
                       ))}
                     </div>
                     <span className="font-bold text-stone-900">4.9 / 5.0</span>
-                    <span className="text-stone-300">•</span>
+                    <span className="text-amber-400">•</span>
                     <span>4,800+ Kinwat families served</span>
-                    <span className="text-stone-300 hidden sm:inline">•</span>
+                    <span className="text-amber-400 hidden sm:inline">•</span>
                     <span className="text-emerald-700 font-bold hidden sm:inline flex items-center gap-1">
                       <MapPin size={11} /> Kinwat Bazar Local Store
                     </span>
@@ -278,9 +278,9 @@ export default function HomePage() {
 
             {/* ── RIGHT COLUMN: BALANCED SPOTLIGHT SHOWCASE CARD ── */}
             <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="w-full max-w-sm lg:max-w-md bg-white rounded-none p-4 sm:p-5 shadow-xl shadow-stone-900/5 border border-stone-200 relative">
+              <div className="w-full max-w-sm lg:max-w-md bg-white rounded-none p-4 sm:p-5 shadow-xl shadow-amber-950/5 border border-amber-200/80 relative">
                 {/* Spotlight Header */}
-                <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-stone-100">
+                <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-amber-100">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-black uppercase tracking-widest text-[#E8272A] bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-none">
                       Featured Spotlight
@@ -336,7 +336,7 @@ export default function HomePage() {
                   </p>
 
                   {/* Pricing Bar */}
-                  <div className="flex items-center justify-between gap-2 p-2.5 bg-stone-50 border border-stone-200 rounded-none mb-3">
+                  <div className="flex items-center justify-between gap-2 p-2.5 bg-[#FFFDF8] border border-amber-200/70 rounded-none mb-3">
                     <div className="flex items-baseline gap-2">
                       <span className="text-xl font-black text-[#E8272A]">
                         ₹{slide.price.toLocaleString('en-IN')}
