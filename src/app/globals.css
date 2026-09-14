@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #FFF0F0;
+  --color-primary-100: #FFDDDD;
+  --color-primary-200: #FFC0C0;
+  --color-primary-300: #FF9494;
+  --color-primary-400: #FF5757;
+  --color-primary-500: #E8272A;
+  --color-primary-600: #CC1A1D;
+  --color-primary-700: #A81517;
+  --color-primary-800: #8B1214;
+  --color-primary-900: #731012;
+  --color-primary: #E8272A;
+
+  --color-secondary-50: #FFF3EE;
+  --color-secondary-100: #FFE4D5;
+  --color-secondary-200: #FFC5A8;
+  --color-secondary-300: #FFA07A;
+  --color-secondary-400: #FF7A50;
+  --color-secondary-500: #FF6B35;
+  --color-secondary-600: #E55520;
+  --color-secondary: #FF6B35;
+
+  --font-family-sans: Inter, system-ui, sans-serif;
+  --font-family-display: "Playfair Display", Georgia, serif;
+
+  --shadow-card: 0 2px 15px rgba(0,0,0,0.08);
+  --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-primary: 0 4px 15px rgba(232, 39, 42, 0.3);
+
+  --animate-bounce-slow: bounce-slow 3s infinite;
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { background: #FAFAFA; color: #1A1A1A; font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  ::selection { background: #E8272A; color: white; }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--color-primary-500);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-primary);
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-primary:hover { background-color: var(--color-primary-600); box-shadow: 0 8px 25px rgba(232,39,42,0.35); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    border: 2px solid var(--color-primary-500);
+    color: var(--color-primary-500);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-secondary:hover { background-color: var(--color-primary-50); }
+
+  .btn-ghost {
+    color: #374151;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-ghost:hover { background-color: #F3F4F6; }
+
+  .product-card {
+    background: white;
+    border-radius: 0px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: block;
+  }
+  .product-card:hover {
+    border-color: #111827;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+  }
+
+  .category-card {
+    background: white;
+    border-radius: 0px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    display: block;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .input-field:focus { border-color: var(--color-primary-400); box-shadow: 0 0 0 3px rgba(232,39,42,0.1); }
+
+  .section-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+  }
+  @media (min-width: 768px) {
+    .section-title { font-size: 1.875rem; }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-primary { background-color: var(--color-primary-100); color: var(--color-primary-700); }
+  .badge-success { background-color: #D1FAE5; color: #065F46; }
+  .badge-warning { background-color: #FEF3C7; color: #92400E; }
+  .badge-error { background-color: #FEE2E2; color: #991B1B; }
+
+  .container-custom {
+    width: 100%;
+    max-width: 1580px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  @media (min-width: 640px) { .container-custom { padding-left: 1.5rem; padding-right: 1.5rem; } }
+  @media (min-width: 1024px) { .container-custom { padding-left: 2.5rem; padding-right: 2.5rem; } }
+  @media (min-width: 1440px) { .container-custom { padding-left: 3.5rem; padding-right: 3.5rem; } }
+
+  .admin-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .price-main { font-size: 1.125rem; font-weight: 700; color: #111827; }
+  .price-mrp { font-size: 0.875rem; color: #9CA3AF; text-decoration: line-through; }
+  .price-discount { font-size: 0.875rem; font-weight: 600; color: #059669; }
+
+  .announcement-bar {
+    background-color: var(--color-primary-500);
+    color: white;
+    text-align: center;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide,
+  .scrollbar-none,
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .scrollbar-hide::-webkit-scrollbar,
+  .scrollbar-none::-webkit-scrollbar,
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #E8272A, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .skeleton { animation: pulse 2s infinite; background-color: #E5E7EB; border-radius: 0.5rem; }
+
+  .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+  .animate-slide-up { animation: slideUp 0.4s ease-out; }
+  .animate-bounce-slow { animation: bounce-slow 3s infinite; }
+}
+
+/* Modern sleek scrollbar for desktop viewports */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+  }
+}
+
+/* Ensure no horizontal scrollbar appears on mobile viewports globally */
+@media (max-width: 767px) {
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  * {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+}
